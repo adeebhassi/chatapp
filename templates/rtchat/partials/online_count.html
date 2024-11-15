@@ -1,0 +1,20 @@
+<span id="online-count" hx-swap-oob="outerHTML" class="pr-1">
+    {{online_count}}
+</span>
+
+
+<div id="groupchat-members" class="flex justify-content-center overflow-auto" style="white-space: nowrap;">
+    {% for user in chat_group.members.all %}
+        <div class="relative"> <!-- Add relative positioning here -->
+            <a href="{% url 'profile' user.username %}" class="flex flex-col text-gray-400 justify-center w-20">
+                {% if user in chat_group.users_online.all %}
+                    <div class="green-dot border-2 border-gray-800 absolute bottom-0 right-0"></div>
+                {% else %}
+                    <div class="gray-dot border-2 border-gray-800 absolute bottom-0 right-0"></div>
+                {% endif %}
+                <img src="{{ user.profile.avatar }}" alt="" class="w-14 h-14 rounded-full mx-auto">
+                <span class="font-bold text-white text-center mx-auto">{{ user.profile.name | slice:":10" }}</span>
+            </a>
+        </div>
+    {% endfor %}
+</div>
